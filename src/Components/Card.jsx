@@ -1,28 +1,44 @@
 import React, { useState } from 'react'
-import { IoCloseSharp } from "react-icons/io5";
-import CardItems from './CardItems';
+import { MdClose } from "react-icons/md";
+import CardItem from './CardItem';
+import { useSelector } from 'react-redux';
+import { BsCartFill } from "react-icons/bs";
 
 const Card = () => {
 
-    const [activeCard, setactiveCard] = useState(true)
+  const selectItem = useSelector((state) => state.cart.cart)
 
-    return (
-        <div className={`bg-white fixed top-0 right-0 w-full lg:w-[25vw] h-full p-3 ${activeCard ? "translate-x-0" : "translate-x-full"} transition-all duration-500 `}>
-            <div className='flex items-center justify-between'>
-                <h1 className='font-semibold text-2xl'>Your Orders</h1>
-                <IoCloseSharp onClick={()=>setactiveCard(!activeCard)} className='font-semibold text-2xl cursor-pointer animate-spin hover:animate-none' />
-            </div>
+  const [activeCart, setactiveCart] = useState(true)
 
-            <CardItems />
+  const totalItems = selectItem.reduce((totalItems , item)=>totalItems + item.qty, 0)
+  const totalPrice = selectItem.reduce((totalPrice, item)=>totalPrice + item.qty * item.price, 0)
 
-            <div className='flex flex-col gap-1 absolute bottom-0'>
-                <h1 className='text-slate-700 font-semibold' >Total Items: </h1>
-                <h1 className='text-slate-700 font-semibold' >Total Price: </h1>
-                <hr />
-                <button className='bg-blue-700 text-2xl py-0 lg:w-[24vw] w-[90vw] mb-4 px-0 text-white rounded-md hover:bg-green-700  transition-all duration-500'>Check Out</button>
-            </div>
+  return (
+    <>
+      <div className={`bg-white fixed top-0 right-0 w-full h-full lg:w-[25vw] p-2 ${activeCart ? "translate-x-0" : "translate-x-full"} transition-all duration-500 z-50`}>
+        <div className='flex items-center justify-between'>
+          <h1 className='font-semibold text-2xl text-slate-700'>Your Orders</h1>
+          <MdClose onClick={() => setactiveCart(!activeCart)} className='cursor-pointer bg-green-700 rounded-full hover:bg-pink-500 text-white hover:text-slate-950 font-semibold' />
         </div>
-    )
+
+        {
+          selectItem.length > 0 ? selectItem.map((food) => (
+            <CardItem key={food.id} id={food.id} name={food.name} image={food.image} price={food.price} desc={food.desc} qty={food.qty} />
+          )) :
+          <h1>No Item Selected</h1>
+        }
+
+
+        <div className='absolute bottom-0'>
+          <h1 className='text-slate-700 font-semibold text-xl'>Total Items: {totalItems} </h1>
+          <h1 className='text-slate-700 font-semibold text-xl'>Total Price: {totalPrice} </h1>
+          <button className='bg-blue-700 py-0 px-2 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white transition-all duration-500 mb-3 w-[90vw] lg:w-[23vw]'>Dinner</button>
+        </div>
+      </div>
+
+      <BsCartFill onClick={()=>setactiveCart(!activeCart)} className={`text-3xl fixed bottom-7 right-6 bg-slate-600 rounded-full cursor-pointer ${selectItem.length > 0 ? "animate-bounce" : "animate-none"}`}/>
+    </>
+  )
 }
 
 export default Card

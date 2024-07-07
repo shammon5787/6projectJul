@@ -1,13 +1,13 @@
 import React from 'react'
-import Navbar from '../Components/Navbar'
-import CategoryMenu from '../Components/CategoryMenu'
-import FoodItem from '../Components/FoodItem'
-import Card from '../Components/Card'
+import Navbar from '../Components/Navbar.jsx'
+import CategoryMenu from '../Components/CategoryMenu.jsx'
+import FoodItem from '../Components/FoodItem.jsx'
+import Card from '../Components/Card.jsx'
 
 const Home = () => {
   return (
     <div>
-        <Navbar />
+        <Navbar/>
         <CategoryMenu />
         <FoodItem />
         <Card />

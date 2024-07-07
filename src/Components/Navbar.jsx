@@ -1,14 +1,17 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addSearch } from '../Store/SearchSlice'
 
-const Navbar = () => {
+const Navbar = () => { 
+  const dispatch = useDispatch()
   return (
-    <div className='flex flex-col md:flex-row lg:items-center justify-between m-6'>
+    <div className='flex flex-col lg:flex-row lgitems-center lg:justify-between m-5'>
         <div>
-            <h1 className=' text-3xl font-bold text-slate-700'>{new Date().toUTCString().slice(0, 16)}</h1>
-            <h1 className='uppercase text-3xl font-bold text-slate-700'>Pizza Center Gilgit</h1>
+            <h1 className='text-3xl font-bold text-slate-700'>{new Date().toUTCString().slice(0, 16)}</h1>
+            <h1 className='text-3xl font-bold text-slate-700 uppercase'>welcome to pizza center</h1>
         </div>
         <div>
-            <input className='p-2 w-full md:w-[30vw] border outline-none rounded-md' type="search" name="search" id="" placeholder='search here' />
+            <input onChange={(e)=>dispatch(addSearch(e.target.value))} className='p-2 w-full lg:w-[25vw] border outline-none rounded-md' type="search" name="search" placeholder='search here' id="" />
         </div>
     </div>
   )
