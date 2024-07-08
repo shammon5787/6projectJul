@@ -2,43 +2,39 @@ import React, { useState } from 'react'
 import { MdClose } from "react-icons/md";
 import CardItem from './CardItem';
 import { useSelector } from 'react-redux';
-import { BsCartFill } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 
 const Card = () => {
 
-  const selectItem = useSelector((state) => state.cart.cart)
+    const [activeCard, setactiveCard] = useState(true)
+    const selectItem = useSelector((state) => state.cart.cart)
 
-  const [activeCart, setactiveCart] = useState(true)
+    const totalItems = selectItem.reduce((totalItems , item)=>totalItems + item.qty, 0)
+    const totalPrice = selectItem.reduce((totalPrice, item)=>totalPrice + item.qty * item.price, 0)
 
-  const totalItems = selectItem.reduce((totalItems , item)=>totalItems + item.qty, 0)
-  const totalPrice = selectItem.reduce((totalPrice, item)=>totalPrice + item.qty * item.price, 0)
+    return (
+        <>
+            <div className={`fixed bg-white top-0 right-0 h-full w-full lg:w-[22vw] p-4 ${activeCard ? "translate-x-0" : "translate-x-full"} transition-all duration-500 z-50 `}>
+                <div className='flex items-center justify-between'>
+                    <h1 className='text-slate-700 text-2xl font-semibold'>Your Orders</h1>
+                    <MdClose onClick={() => setactiveCard(!activeCard)} className='text-slate-700 font-bold text-2xl cursor-pointer bg-green-300 rounded-full hover:bg-blue-700 hover:text-white transition-all duration-500' />
+                </div>
+                {
+                    selectItem.map((food) => (
+                        <CardItem key={food.id} id={food.id} name={food.name} image={food.image} price={food.price} desc={food.desc} qty={food.qty} />
+                    ))
+                }
 
-  return (
-    <>
-      <div className={`bg-white fixed top-0 right-0 w-full h-full lg:w-[25vw] p-2 ${activeCart ? "translate-x-0" : "translate-x-full"} transition-all duration-500 z-50`}>
-        <div className='flex items-center justify-between'>
-          <h1 className='font-semibold text-2xl text-slate-700'>Your Orders</h1>
-          <MdClose onClick={() => setactiveCart(!activeCart)} className='cursor-pointer bg-green-700 rounded-full hover:bg-pink-500 text-white hover:text-slate-950 font-semibold' />
-        </div>
-
-        {
-          selectItem.length > 0 ? selectItem.map((food) => (
-            <CardItem key={food.id} id={food.id} name={food.name} image={food.image} price={food.price} desc={food.desc} qty={food.qty} />
-          )) :
-          <h1>No Item Selected</h1>
-        }
-
-
-        <div className='absolute bottom-0'>
-          <h1 className='text-slate-700 font-semibold text-xl'>Total Items: {totalItems} </h1>
-          <h1 className='text-slate-700 font-semibold text-xl'>Total Price: {totalPrice} </h1>
-          <button className='bg-blue-700 py-0 px-2 font-semibold text-xl rounded-md hover:bg-green-700 hover:text-white transition-all duration-500 mb-3 w-[90vw] lg:w-[23vw]'>Dinner</button>
-        </div>
-      </div>
-
-      <BsCartFill onClick={()=>setactiveCart(!activeCart)} className={`text-3xl fixed bottom-7 right-6 bg-slate-600 rounded-full cursor-pointer ${selectItem.length > 0 ? "animate-bounce" : "animate-none"}`}/>
-    </>
-  )
+                <div className='absolute bottom-2'>
+                    <h1 className='text-slate-700 font-semibold'>Total Items : {totalItems} </h1>
+                    <h1 className='text-slate-700 font-semibold'>Total Price : {totalPrice} </h1>
+                    <hr />
+                    <button className='bg-blue-700 px-2 py-0 rounded-md text-white mt-2 font-semibold hover:bg-green-600 hover:text-black transition-all duration-500 w-[90vw] lg:w-[20vw] '>Check Out</button>
+                </div>
+            </div>
+            <BsFillCartFill onClick={()=>setactiveCard(!activeCard)} className={`fixed bottom-10 right-10 text-3xl cursor-pointer bg-white rounded-full shadow-md p-1 ${selectItem.length > 0 ? "animate-bounce" : "animate-none"} `}/>
+        </>
+    )
 }
 
 export default Card
