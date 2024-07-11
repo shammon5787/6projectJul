@@ -9,16 +9,16 @@ const FoodItem = () => {
   const search = useSelector((state)=>state.search.search)
 
   return (
-    <div className='grid lg:grid-cols-4 m-6 gap-3'>
+    <div className='m-6 lg:grid grid-cols-4 gap-3'>
       {
         FoodData.filter((food) => {
           if (category === "All") {
             return food.name.toLowerCase().includes(search.toLowerCase());
-          }else{
-            return category === food.category && food.name.toLowerCase().includes(search.toLowerCase())
+          } else {
+            return category === food.category && food.name.toLowerCase().includes(search.toLowerCase());
           }
         }).map((food) => (
-          <FoodCard key={food.id} id={food.id} name={food.name} image={food.image} price={food.price} rating={food.ratting} desc={food.desc} />
+          <FoodCard key={food.id} id={food.id} name={food.name} image={food.image} price={food.price} desc={food.desc} rating={food.ratting} />
         ))
       }
 
