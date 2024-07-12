@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const CategorySlice = createSlice({
     name: 'category',
-    initialState:{
+    initialState :{
         category: "All"
     },
     reducers:{
@@ -14,4 +15,3 @@ const CategorySlice = createSlice({
 
 export const {addCategory} = CategorySlice.actions
 export default CategorySlice.reducer
-
