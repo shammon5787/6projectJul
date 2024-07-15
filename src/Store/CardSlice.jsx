@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const CardSlice = createSlice({
-    name: 'cart',
+    name : 'cart',
     initialState:{
         cart: [],
     },
@@ -9,12 +9,12 @@ const CardSlice = createSlice({
         add:(state, action)=>{
             const existingItem = state.cart.find((item)=>item.id === action.payload.id)
             if(existingItem){
-                state.cart = state.cart.map((item)=>item.id === action.payload.id ? {... item, qty : item.qty + 1}: item)
+                state.cart = state.cart.map((item)=>item.id === action.payload.id ? {... item, qty : item.qty + 1} : item)
             }else{
                 state.cart.push(action.payload)
             }
         },
-        remove:(state ,action)=>{
+        remove:(state, action)=>{
             state.cart = state.cart.filter((item)=>item.id !== action.payload.id)
         },
         incrementItem:(state, action)=>{
