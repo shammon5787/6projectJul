@@ -6,7 +6,7 @@ import Card from '../Components/Card'
 
 const Home = () => {
   return (
-    <div className='m-6 gap-6'>
+    <div className='m-6'>
         <Navbar />
         <CategoryMenu />
         <FoodItem />
