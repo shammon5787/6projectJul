@@ -3,7 +3,7 @@ import React from 'react'
 const Success = () => {
   return (
     <div>
-        Success
+      <input type="search" name="search" id="" />
     </div>
   )
 }

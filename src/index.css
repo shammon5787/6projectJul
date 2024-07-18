@@ -5,5 +5,8 @@
 body{
     padding: o;
     margin: 0;
-    background-color: aqua;
+    background-color: rgb(29, 34, 34);
+    color: lightcyan;
+    /* overflow-y: scroll;
+    scrollbar-width: none; */
 }
